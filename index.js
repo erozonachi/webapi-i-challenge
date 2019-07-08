@@ -8,6 +8,11 @@ app.use(express.json());
 app.use(cors());
 const port = 5000;
 
+const handleError = (info, res) => {
+  res.status(info.statusCode).res.json({ error: info.message });
+  return;
+};
+
 //Routes...
 app.get('/api/users', (req, res) => { //Get all users
   Users.find()
@@ -15,7 +20,10 @@ app.get('/api/users', (req, res) => { //Get all users
     res.status(200).json(data);
   })
   .catch(err => {
-    res.status(500).json({ error: "The users information could not be retrieved." });
+    handleError({ 
+      statusCode: 500, 
+      message: "The users information could not be retrieved."
+    }, res);
   });
 });
 
@@ -26,18 +34,27 @@ app.get('/api/users/:id', (req, res) => { //Get a user by ID
     if(data) {
       res.status(200).json(data);
     } else {
-      res.status(404).json({ message: "The user with the specified ID does not exist." });
+      handleError({ 
+        statusCode: 404, 
+        message: "The user with the specified ID does not exist."
+      }, res);
     }
   })
   .catch(err => {
-    res.status(500).json({ error: "The user information could not be retrieved." });
+    handleError({ 
+      statusCode: 500, 
+      message: "The user information could not be retrieved."
+    }, res);
   });
 });
 
 app.post('/api/users', (req, res) => { // Create a new user
   const { name, bio } = req.body;
   if (!name || !bio) {
-    res.status(400).json({ errorMessage: "Please provide name and bio for the user." });
+    handleError({ 
+      statusCode: 400, 
+      message: "Please provide name and bio for the user."
+    }, res);
   } else {
     Users.insert({name, bio})
     .then(data => {
@@ -47,7 +64,10 @@ app.post('/api/users', (req, res) => { // Create a new user
       res.status(201).json(data);
     })
     .catch(err => {
-      res.status(500).json({ error: "There was an error while saving the user to the database" });
+      handleError({ 
+        statusCode: 500, 
+        message: "There was an error while saving the user to the database"
+      }, res);
     });
   }
 });
@@ -59,14 +79,20 @@ app.delete('/api/users/:id', (req, res) => { // Delete a user by ID
     if (data > 0) {
       return Users.find();
     } else {
-      res.status(404).json({ message: "The user with the specified ID does not exist." })
+      handleError({ 
+        statusCode: 404, 
+        message: "The user with the specified ID does not exist."
+      }, res);
     }
   })
   .then(data => {
     res.status(200).json(data);
   })
   .catch(err => {
-    res.status(500).json({ error: "The user could not be removed" });
+    handleError({ 
+      statusCode: 500, 
+      message: "The user could not be removed"
+    }, res);
   });
 });
 
@@ -74,7 +100,10 @@ app.put('/api/users/:id', (req, res) => { // Update user by ID
   const { id } = req.params;
   const { name, bio } = req.body;
   if (!name || !bio) {
-    res.status(400).json({ errorMessage: "Please provide name and bio for the user." });
+    handleError({ 
+      statusCode: 400, 
+      message: "Please provide name and bio for the user."
+    }, res);
     return;
   }
 
@@ -83,14 +112,20 @@ app.put('/api/users/:id', (req, res) => { // Update user by ID
     if (data > 0) {
       return Users.findById(id);
     } else {
-      res.status(404).json({ message: "The user with the specified ID does not exist." })
+      handleError({ 
+        statusCode: 404, 
+        message: "The user with the specified ID does not exist."
+      }, res);
     }
   })
   .then(data => {
     res.status(200).json(data);
   })
   .catch(err => {
-    res.status(500).json({ error: "The user information could not be modified." });
+    handleError({ 
+      statusCode: 500, 
+      message: "The user information could not be modified."
+    }, res);
   });
 });
 
