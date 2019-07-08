@@ -17,6 +17,21 @@ app.get('/api/users', (req, res) => { //Get all users
   });
 });
 
+app.get('/api/users/:id', (req, res) => { //Get a user by ID
+  const { id } = req.params;
+  Users.findById(id)
+  .then(data => {
+    if(data) {
+      res.status(200).json(data);
+    } else {
+      res.status(404).json({ message: "The user with the specified ID does not exist." });
+    }
+  })
+  .catch(err => {
+    res.status(500).json({ error: "The user information could not be retrieved." });
+  });
+});
+
 app.listen(port, () => {
   console.log('Server running on port: 5000');
 });
