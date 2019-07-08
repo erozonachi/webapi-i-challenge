@@ -1,9 +1,11 @@
 // implement your API here
 const express = require('express');
+const cors = require('cors');
 const Users = require('./data/db');
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const port = 5000;
 
 //Routes...
