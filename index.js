@@ -32,7 +32,7 @@ app.get('/api/users/:id', (req, res) => { //Get a user by ID
   });
 });
 
-app.post('/api/users/', (req, res) => { // Create a new user
+app.post('/api/users', (req, res) => { // Create a new user
   const { name, bio } = req.body;
   if (!name || !bio) {
     res.status(400).json({ errorMessage: "Please provide name and bio for the user." });
@@ -48,6 +48,24 @@ app.post('/api/users/', (req, res) => { // Create a new user
       res.status(500).json({ error: "There was an error while saving the user to the database" });
     });
   }
+});
+
+app.delete('/api/users/:id', (req, res) => { // Create a new user
+  const { id } = req.params;
+  Users.remove(id)
+  .then(data => {
+    if (data > 0) {
+      return Users.find();
+    } else {
+      res.status(404).json({ message: "The user with the specified ID does not exist." })
+    }
+  })
+  .then(data => {
+    res.status(200).json(data);
+  })
+  .catch(err => {
+    res.status(500).json({ error: "The user could not be removed" });
+  });
 });
 
 app.listen(port, () => {
