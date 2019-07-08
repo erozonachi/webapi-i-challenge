@@ -63,19 +63,19 @@ Inside `index.js` add the code necessary to implement the following _endpoints_:
 
 When the client makes a `POST` request to `/api/users`:
 
-- If the request body is missing the `name` or `bio` property:
+- [x] If the request body is missing the `name` or `bio` property:
 
   - cancel the request.
   - respond with HTTP status code `400` (Bad Request).
   - return the following JSON response: `{ errorMessage: "Please provide name and bio for the user." }`.
 
-- If the information about the _user_ is valid:
+- [x] If the information about the _user_ is valid:
 
   - save the new _user_ the the database.
   - return HTTP status code `201` (Created).
   - return the newly created _user document_.
 
-- If there's an error while saving the _user_:
+- [x] If there's an error while saving the _user_:
   - cancel the request.
   - respond with HTTP status code `500` (Server Error).
   - return the following JSON object: `{ error: "There was an error while saving the user to the database" }`.

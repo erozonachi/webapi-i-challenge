@@ -32,6 +32,24 @@ app.get('/api/users/:id', (req, res) => { //Get a user by ID
   });
 });
 
+app.post('/api/users/', (req, res) => { // Create a new user
+  const { name, bio } = req.body;
+  if (!name || !bio) {
+    res.status(400).json({ errorMessage: "Please provide name and bio for the user." });
+  } else {
+    Users.insert({name, bio})
+    .then(data => {
+      return Users.findById(data.id);
+    })
+    .then(data => {
+      res.status(201).json(data);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "There was an error while saving the user to the database" });
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log('Server running on port: 5000');
 });
