@@ -50,7 +50,7 @@ app.post('/api/users', (req, res) => { // Create a new user
   }
 });
 
-app.delete('/api/users/:id', (req, res) => { // Create a new user
+app.delete('/api/users/:id', (req, res) => { // Delete a user by ID
   const { id } = req.params;
   Users.remove(id)
   .then(data => {
@@ -65,6 +65,30 @@ app.delete('/api/users/:id', (req, res) => { // Create a new user
   })
   .catch(err => {
     res.status(500).json({ error: "The user could not be removed" });
+  });
+});
+
+app.put('/api/users/:id', (req, res) => { // Update user by ID
+  const { id } = req.params;
+  const { name, bio } = req.body;
+  if (!name || !bio) {
+    res.status(400).json({ errorMessage: "Please provide name and bio for the user." });
+    return;
+  }
+
+  Users.update(id, {name, bio})
+  .then(data => {
+    if (data > 0) {
+      return Users.findById(id);
+    } else {
+      res.status(404).json({ message: "The user with the specified ID does not exist." })
+    }
+  })
+  .then(data => {
+    res.status(200).json(data);
+  })
+  .catch(err => {
+    res.status(500).json({ error: "The user information could not be modified." });
   });
 });
 

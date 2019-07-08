@@ -113,24 +113,24 @@ When the client makes a `DELETE` request to `/api/users/:id`:
 
 When the client makes a `PUT` request to `/api/users/:id`:
 
-- If the _user_ with the specified `id` is not found:
+- [x] If the _user_ with the specified `id` is not found:
 
   - return HTTP status code `404` (Not Found).
   - return the following JSON object: `{ message: "The user with the specified ID does not exist." }`.
 
-- If the request body is missing the `name` or `bio` property:
+- [x] If the request body is missing the `name` or `bio` property:
 
   - cancel the request.
   - respond with HTTP status code `400` (Bad Request).
   - return the following JSON response: `{ errorMessage: "Please provide name and bio for the user." }`.
 
-- If there's an error when updating the _user_:
+- [x] If there's an error when updating the _user_:
 
   - cancel the request.
   - respond with HTTP status code `500`.
   - return the following JSON object: `{ error: "The user information could not be modified." }`.
 
-- If the user is found and the new information is valid:
+- [x] If the user is found and the new information is valid:
 
   - update the user document in the database using the new information sent in the `reques body`.
   - return HTTP status code `200` (OK).
