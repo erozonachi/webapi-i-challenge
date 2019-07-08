@@ -12,9 +12,9 @@ Use Node.js and Express to build an API that performs CRUD operations on users.
 
 ### Download Project Files and Install Dependencies
 
-- **Fork** and **Clone** this repository.
-- **CD into the folder** where you cloned the repository.
-- Type `yarn` or `npm install` to download all dependencies listed inside `package.json`.
+- [x] **Fork** and **Clone** this repository.
+- [x] **CD into the folder** where you cloned the repository.
+- [x] Type `yarn` or `npm install` to download all dependencies listed inside `package.json`.
 
 ### Database access
 
@@ -30,9 +30,9 @@ Now that we have a way to add, update, remove and retrieve data from the provide
 
 ### Start the API and Implement Requirements
 
-- To start the server, type `yarn server` or `npm run server` from the root folder (where the _package.json_ file is). The server is configured to restart automatically as you make changes.
-- Add the code necessary to implement the API requirements.
-- **Test the API using _Postman_ as you work through the exercises.**
+- [x] To start the server, type `yarn server` or `npm run server` from the root folder (where the _package.json_ file is). The server is configured to restart automatically as you make changes.
+- [x] Add the code necessary to implement the API requirements.
+- [x] **Test the API using _Postman_ as you work through the exercises.**
 
 ### User Schema
 
@@ -82,7 +82,7 @@ When the client makes a `POST` request to `/api/users`:
 
 When the client makes a `GET` request to `/api/users`:
 
-- If there's an error in retrieving the _users_ from the database:
+- [x] If there's an error in retrieving the _users_ from the database:
   - cancel the request.
   - respond with HTTP status code `500`.
   - return the following JSON object: `{ error: "The users information could not be retrieved." }`.
